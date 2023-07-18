@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
+        android:icon="@drawable/ic_sort"
+        android:title="Sort by SAT Score"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/action_sort_by_SAT_DESC"
+                android:title="High Avg. SAT Score"/>
+            <item
+                android:id="@+id/action_sort_by_SAT_ASC"
+                android:title="Low Avg. SAT Score"/>
+        </menu>
+
+    </item>
+
+</menu>
