@@ -3,7 +3,7 @@ package com.example.nycschools.model.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tbl_School")
+@Entity(tableName = School.tableName)
 
 data class School(
     val name: String?,
@@ -18,4 +18,8 @@ data class School(
     val zip: String?,
     val state: String?,
     @PrimaryKey val id: String
-)
+) {
+    companion object {
+        const val tableName = "tbl_School"
+    }
+}

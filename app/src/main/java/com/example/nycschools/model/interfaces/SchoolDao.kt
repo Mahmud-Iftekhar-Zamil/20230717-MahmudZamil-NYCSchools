@@ -4,6 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.nycschools.model.data.SATScore
 import com.example.nycschools.model.data.School
 import com.example.nycschools.model.data.SchoolDetailData
@@ -17,6 +20,14 @@ interface SchoolDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSATScore(satScore: SATScore)
+
+    @RawQuery(observedEntities = [School::class,SATScore::class])
+    fun query(query:SupportSQLiteQuery): Int
+
+    fun getRecord(schoolId: String, tableName: String): Int {
+        val queryText = SimpleSQLiteQuery("SELECT COUNT(*) AS CNT FROM $tableName WHERE id = \'$schoolId\'")
+        return this.query(queryText)
+    }
 
     @Query("""
         SELECT tbl_School.id, tbl_School.name, tbl_School.totalStudents, tbl_School.attendanceRate, tbl_School.phone,

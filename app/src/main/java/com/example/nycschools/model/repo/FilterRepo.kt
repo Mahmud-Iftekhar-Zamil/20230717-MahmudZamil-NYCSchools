@@ -4,15 +4,14 @@ import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.IOException
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,6 +58,10 @@ class FilterRepo @Inject constructor(@ApplicationContext context: Context) {
         dataStore.edit {preference ->
             preference[PrefKeys.SORT_ORDER] = sortOrder.name
         }
+    }
+    suspend fun getCurrentSortOrderFromDataStore(): String {
+        val prefS = dataStore.data.first()
+        return prefS[PrefKeys.SORT_ORDER].toString()
     }
 
 }
