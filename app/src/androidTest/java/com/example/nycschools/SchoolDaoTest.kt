@@ -55,7 +55,7 @@ class SchoolDaoTest {
             "State",
             "isc123"
         )
-        schoolDao.insertSchool(school)
+        schoolDao.insertSchool(listOf(school) )
         val record: Int = schoolDao.getRecord(school.id,School.tableName)
         Log.d("School", "Record found = $record")
         assert(record>0)
@@ -63,8 +63,8 @@ class SchoolDaoTest {
 
     @Test
     fun testInsertSATScore() = runBlocking {
-        val satScore = SATScore(100, 348, 387, 321, "isc123")
-        schoolDao.insertSATScore(satScore)
+        val satScore = SATScore("100","323","432","231","isc123")
+        schoolDao.insertSATScore(listOf(satScore))
         val record: Int = schoolDao.getRecord(satScore.id,SATScore.tableName)
         Log.d("SAT", "Record found = $record")
         assert(record>0)

@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SchoolDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSchool(school: School)
+    suspend fun insertSchool(schoolList: List<School>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSATScore(satScore: SATScore)
+    suspend fun insertSATScore(satScoreList: List<SATScore>)
 
     @RawQuery(observedEntities = [School::class,SATScore::class])
     fun query(query:SupportSQLiteQuery): Int
@@ -36,7 +36,7 @@ interface SchoolDao {
                 tbl_SATScore.math, tbl_SATScore.writing 
                 FROM tbl_School 
                 JOIN tbl_SATScore ON tbl_School.id = tbl_SATScore.id 
-                WHERE tbl_SATScore.testTakers > 0 AND tbl_School.name LIKE '%' || :schoolName || '%' 
+                WHERE CAST(tbl_SATScore.testTakers AS INTEGER) > 0 AND tbl_School.name LIKE '%' || :schoolName || '%' 
                 ORDER BY (tbl_SATScore.criticalReading + tbl_SATScore.math + tbl_SATScore.writing) DESC , tbl_School.name
     """)
     fun getSchoolDetailDataDESC(schoolName: String): Flow<List<SchoolDetailData>>
@@ -48,8 +48,8 @@ interface SchoolDao {
                 tbl_SATScore.math, tbl_SATScore.writing 
                 FROM tbl_School 
                 JOIN tbl_SATScore ON tbl_School.id = tbl_SATScore.id 
-                WHERE tbl_SATScore.testTakers > 0 AND tbl_School.name LIKE '%' || :schoolName || '%' 
-                ORDER BY (tbl_SATScore.criticalReading + tbl_SATScore.math + tbl_SATScore.writing) ASC , tbl_School.name
+                WHERE CAST(tbl_SATScore.testTakers AS INTEGER) > 0 AND tbl_School.name LIKE '%' || :schoolName || '%' 
+                ORDER BY (CAST(tbl_SATScore.criticalReading AS INTEGER) + CAST(tbl_SATScore.math AS INTEGER) + CAST(tbl_SATScore.writing AS INTEGER)) ASC , tbl_School.name
     """)
     fun getSchoolDetailDataASC(schoolName: String): Flow<List<SchoolDetailData>>
 

@@ -13,7 +13,6 @@ import javax.inject.Named
 @Module
 @InstallIn(SingletonComponent::class)
 object TestAppModule {
-
     @Provides
     @Named("test_db")
     fun provideInMemoryDatabase(@ApplicationContext context: Context) =

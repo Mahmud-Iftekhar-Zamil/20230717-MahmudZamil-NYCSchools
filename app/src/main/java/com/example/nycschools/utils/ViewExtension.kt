@@ -2,6 +2,9 @@ package com.example.nycschools.utils
 
 import androidx.appcompat.widget.SearchView
 
+val <T> T.exhaustive: T
+    get() = this
+
 /**
  * This is an extension function to fetch what text is inputted by user in search view
  * */
